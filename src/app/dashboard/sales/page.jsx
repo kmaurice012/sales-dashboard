@@ -1,30 +1,34 @@
 import { getYearlySalesData } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
-import styles from "@/app/ui/dashboard/users/users.module.css";
-import Image from "next/image";
-import Link from "next/link";
+import styles from "@/app/ui/dashboard/sales/sales.module.css";
+
 
 const SalesPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  const  sales = await getYearlySalesData();
-  const  count = sales.length
+  const sales = await getYearlySalesData();
+  const count = sales.length;
 
-  // console.log(sales)
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a record..." />
-        {/* <Link href="/dashboard/users/add">
-          <button className={styles.addButton}>Add New</button>
-        </Link> */}
+        <div className={styles.inputContainer}>
+          <div className={styles.select}>
+            <select className={styles.select}>
+              <option className={styles.option} value="1">Americano</option>
+              <option className={styles.option} value="2">Latte</option>
+              <option className={styles.option} value="3">Green Tea</option>
+            </select>
+          </div>{" "}
+        </div>
       </div>
       <table className={styles.table}>
         <thead>
           <tr>
-          <td>Customer Name</td>
+            <td>Customer Name</td>
             <td>Order Date</td>
             <td>Product Line</td>
             <td>Sales</td>
