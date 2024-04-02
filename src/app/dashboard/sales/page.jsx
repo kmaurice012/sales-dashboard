@@ -18,7 +18,7 @@ const SalesPage = async ({ searchParams }) => {
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a record..." />
-        <Select items={yearsRecord}  value={selectedValue} onChange={handleChange}/>
+        {/* <Select items={yearsRecord}  value={selectedValue} onChange={handleChange}/> */}
       </div>
       <table className={styles.table}>
         <thead>

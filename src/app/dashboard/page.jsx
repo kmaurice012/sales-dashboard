@@ -14,8 +14,9 @@ const Dashboard = () => {
             <Card item={item} key={item.id} />
           ))}
         </div>
-        <Transactions />
         <Chart />
+        <Transactions />
+    
       </div>
       <div className={styles.side}>
         <Rightbar />
