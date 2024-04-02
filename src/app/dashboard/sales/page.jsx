@@ -1,4 +1,4 @@
-import { getYearlySalesData } from "@/app/lib/data";
+import { getYears, getYearlySalesData } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/sales/sales.module.css";
@@ -7,6 +7,8 @@ import styles from "@/app/ui/dashboard/sales/sales.module.css";
 const SalesPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
+  const years  = await getYears();
+  console.log(years)
   const sales = await getYearlySalesData();
   const count = sales.length;
 
