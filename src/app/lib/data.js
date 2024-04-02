@@ -9,6 +9,7 @@ const csvData = await convertCsvToJson("public/sales_data_sample.csv");
     salesRecords.forEach((record) => {
       uniqueYearIds.add(record.YEAR_ID);
     });
+  const  yearsArray = Array.from(uniqueYearIds);
   export const years = Array.from(uniqueYearIds);
 
 
@@ -17,6 +18,7 @@ const csvData = await convertCsvToJson("public/sales_data_sample.csv");
 export const getYearlySalesData = async (year) => {
   try {
     const response = csvData.filter((item) => item.YEAR_ID === "2003");
+    yearsArray
     return response;
   } catch {
     return {
