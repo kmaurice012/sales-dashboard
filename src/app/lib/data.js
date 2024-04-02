@@ -3,23 +3,15 @@ import { convertCsvToJson } from "./utils.js";
 const csvData = await convertCsvToJson("public/sales_data_sample.csv");
 
 //Returns A range of years
-export const getYears = async () => {
-  try {
-    const salesRecords = csvData.filter((item) => item.YEAR_ID === year);
+
+    const salesRecords = csvData
     const uniqueYearIds = new Set();
     salesRecords.forEach((record) => {
       uniqueYearIds.add(record.YEAR_ID);
     });
-    const uniqueYearIdsArray = Array.from(uniqueYearIds);
-   console.log(uniqueYearIdsArray)
-    return uniqueYearIdsArray;
-  } catch {
-    return {
-      error: "Failed to convert CSV to JSON",
-      status: 500,
-    };
-  }
-};
+  export const years = Array.from(uniqueYearIds);
+
+
 //Returns sales recorded on a specificc year
 
 export const getYearlySalesData = async (year) => {
