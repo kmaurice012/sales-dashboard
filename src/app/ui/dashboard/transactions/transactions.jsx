@@ -1,8 +1,8 @@
 "use client";
-import Image from "next/image";
 import styles from "./transactions.module.css";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
+import SelectComponent from "../select/select";
 
 const columns = [
   { field: "ORDERNUMBER", headerName: "Order Number", width: 90 },
@@ -39,7 +39,10 @@ const columns = [
 const Transactions = ({ rows }) => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Transactions</h2>
+       <div className={styles.tableHead}>
+        <h2 className={styles.title}>Transactions</h2>
+        <SelectComponent/>
+      </div>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}

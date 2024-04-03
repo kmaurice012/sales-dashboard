@@ -43,6 +43,10 @@
 .done{
   background-color: #afd6ee75;
 }
+.tableHead {
+  display: flex;
+  justify-content: space-between;
+}
 
 .cancelled{
   background-color: #f7737375;
