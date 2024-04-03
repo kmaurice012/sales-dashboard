@@ -1,104 +1,72 @@
+"use client";
 import Image from "next/image";
 import styles from "./transactions.module.css";
+import { DataGrid } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
-const Transactions = () => {
+const columns = [
+  { field: "ORDERNUMBER", headerName: "Order Number", width: 90 },
+  {
+    field: "CUSTOMERNAME",
+    headerName: " Customer Name",
+    width: 150,
+  },
+  {
+    field: "ORDERDATE",
+    headerName: "Order Date",
+    width: 150,
+  },
+  {
+    field: "PRODUCTLINE",
+    headerName: "Product Line",
+    type: "number",
+    width: 110,
+  },
+  {
+    field: "SALES",
+    headerName: "Sales",
+    description: "This column has a value getter and is not sortable.",
+    width: 160,
+  },
+  {
+    field: "STATUS",
+    headerName: "Status",
+    description: "This column has a value getter and is not sortable.",
+    width: 160,
+  },
+];
+
+const Transactions = ({ rows }) => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Latest Transactions</h2>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td>Status</td>
-            <td>Date</td>
-            <td>Amount</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                John Doe
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.pending}`}>
-                Pending
-              </span>
-            </td>
-            <td>14.02.2024</td>
-            <td>$3.200</td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                John Doe
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.done}`}>Done</span>
-            </td>
-            <td>14.02.2024</td>
-            <td>$3.200</td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                John Doe
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.cancelled}`}>
-                Cancelled
-              </span>
-            </td>
-            <td>14.02.2024</td>
-            <td>$3.200</td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                John Doe
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.pending}`}>
-                Pending
-              </span>
-            </td>
-            <td>14.02.2024</td>
-            <td>$3.200</td>
-          </tr>
-        </tbody>
-      </table>
+      <h2 className={styles.title}>Transactions</h2>
+      <Box sx={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.ORDERNUMBER}
+          className={styles.dataGrid}
+          sx={{
+            "& .MuiDataGrid-cell": {
+              border: "none",
+            },
+            " .mui-s1v7zr-MuiDataGrid-virtualScrollerRenderZone": {
+              color: "aliceblue",
+            },
+            ".mui-rtrcn9-MuiTablePagination-root": {
+              color: "aliceblue",
+            },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+        />
+      </Box>
     </div>
   );
 };
