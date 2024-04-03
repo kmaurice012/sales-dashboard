@@ -5,11 +5,12 @@ import  Barchart  from "../ui/dashboard/barchart/barchart";
 import styles from "../ui/dashboard/dashboard.module.css";
 // import Rightbar from "../ui/dashboard/rightbar/rightbar";
 import Transactions from "../ui/dashboard/transactions/transactions";
-import { graphData } from "@/app/lib/data";
+import { graphData, getYearlySalesData } from "@/app/lib/data";
 
 
-const Dashboard = () => {
+const Dashboard = async () => {
   const data = graphData
+ const rows = await getYearlySalesData();
 
   return (
     <div className={styles.wrapper}>
@@ -21,7 +22,7 @@ const Dashboard = () => {
         </div>
         <Barchart data={data}/>
         {/* <Chart /> */}
-        <Transactions />
+        <Transactions rows={rows}/>
     
       </div>
       {/* <div className={styles.side}>
