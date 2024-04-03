@@ -10,6 +10,16 @@ salesRecords.forEach((record) => {
   uniqueYearIds.add(record.YEAR_ID);
 });
 const yearsArray = Array.from(uniqueYearIds);
+
+const uniqueStatus = new Set();
+salesRecords.forEach((record) => {
+  uniqueStatus.add(record.STATUS);
+});
+const statusArray = Array.from(uniqueStatus);
+// console.log(statusArray);
+
+
+
 const firstYear = yearsArray[0];
 const latestYear = yearsArray[yearsArray.length - 1];
 const previousYear = yearsArray[yearsArray.length - 2];
@@ -41,6 +51,15 @@ const averageLatestYearSales = (LatestShippedSales / LatestNoOfSales).toFixed(
   2
 );
 //End Of Latest Year Average Sales
+// Start Of Lates Year Average Orders
+   let LatestOderedProducts = 0;
+   for (const order of latestYearSales) {
+     LatestOderedProducts += Number(order.QUANTITYORDERED);
+   }
+   const averageLatestYearOders = (LatestOderedProducts / LatestNoOfSales).toFixed(2)
+
+// End Of Lates Year Average Orders
+
 
 //Start Of Previous Year Average Sales
 const previousYearSales = shippedSales.filter(
@@ -57,6 +76,15 @@ const averagePreviousYearSales = (
 ).toFixed(2);
 
 //End Of Previous Year Average Sales
+//Start Of Previous Year Average Oders
+let PreviousOderedProducts = 0;
+for (const order of previousYearSales) {
+  PreviousOderedProducts += Number(order.QUANTITYORDERED);
+}
+const averagePreviousYearOders = (PreviousOderedProducts / PreviousNoOfSales).toFixed(2)
+//End Of Previous Year Average Oders
+
+
 //Calculate Total Sales Increase Or Decrease
 let percentageIncrease = 0;
 let percentageDeacrease = 0;
@@ -76,6 +104,25 @@ if (averageLatestYearSales > averagePreviousYearSales) {
 }
 
 //Calculate Total Sales Increase Or Decrease
+//Calculate Total Oder Increase Or Decrease
+let percentageOrderIncrease = 0;
+let percentageOrderDeacrease = 0;
+let orderchange;
+if (averageLatestYearOders > averagePreviousYearOders) {
+  let difference = averageLatestYearOders - averagePreviousYearOders;
+  percentageOrderIncrease = ((difference / averagePreviousYearOders) * 100).toFixed(
+    3
+  );
+  orderchange = percentageOrderIncrease;
+} else if (averageLatestYearOders < averagePreviousYearOders) {
+  let difference = averagePreviousYearOders - averageLatestYearOders;
+  percentageOrderDeacrease = ((difference / averageLatestYearOders) * 100).toFixed(
+    3
+  );
+  orderchange = -percentageOrderDeacrease;
+}
+//Calculate Total Oder Increase Or Decrease
+
 
 //   export const years = Array.from(uniqueYearIds);
 
@@ -92,7 +139,7 @@ if (averageLatestYearSales > averagePreviousYearSales) {
 
 export const getYearlySalesData = async (year) => {
   try {
-    const response = csvData.filter((item) => item.YEAR_ID === "2003");
+    const response = csvData
     yearsArray;
     return response;
   } catch {
@@ -136,9 +183,9 @@ export const cards = [
   },
   {
     id: 2,
-    title: "Stock",
-    number: 8.236,
-    change: -2,
+    title: "Total Average Orders",
+    number: averageLatestYearOders,
+    change: orderchange,
   },
   {
     id: 3,
