@@ -3,18 +3,11 @@
 import styles from './barchart.module.css'
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const Barchart = ({graphData}) => {
-  const data = graphData
+const Barchart = ({data}) => {
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Sales Report</h2>
-      {graphData?.map((item) => (
-        console.log(item),
-        <div className={styles.item} key={item.name}>
-          <div >{item.name}</div>
-        </div>
-      ))
-      }
       <ResponsiveContainer width="100%" height="90%"> 
       <BarChart
           width={500}

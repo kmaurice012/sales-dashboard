@@ -9,6 +9,8 @@ import { graphData } from "@/app/lib/data";
 
 
 const Dashboard = () => {
+  const data = graphData
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.main}>
@@ -17,7 +19,7 @@ const Dashboard = () => {
             <Card item={item} key={item.id} />
           ))}
         </div>
-        <Barchart data={graphData}/>
+        <Barchart data={data}/>
         {/* <Chart /> */}
         <Transactions />
     
