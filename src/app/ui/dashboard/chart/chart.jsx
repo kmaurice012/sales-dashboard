@@ -7,44 +7,27 @@ const data = [
   {
     name: "Sun",
     visit: 4000,
+    sales: 3650,
     click: 2400,
   },
   {
     name: "Mon",
     visit: 3000,
+    sales: 3650,
     click: 1398,
   },
   {
     name: "Tue",
     visit: 2000,
+    sales: 3650,
     click: 3800,
-  },
-  {
-    name: "Wed",
-    visit: 2780,
-    click: 3908,
-  },
-  {
-    name: "Thu",
-    visit: 1890,
-    click: 4800,
-  },
-  {
-    name: "Fri",
-    visit: 2390,
-    click: 3800,
-  },
-  {
-    name: "Sat",
-    visit: 3490,
-    click: 4300,
   },
 ];
 
 const Chart = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Weekly Recap</h2>
+      <h2 className={styles.title}>Yearly Recap</h2>
       <ResponsiveContainer width="100%" height="90%">
         <LineChart
           width={500}
@@ -62,6 +45,7 @@ const Chart = () => {
           <Tooltip contentStyle={{background:"#151c2c", border:"none"}}/>
           <Legend />
           <Line type="monotone" dataKey="visit" stroke="#8884d8" strokeDasharray="5 5" />
+          <Line type="monotone" dataKey="sales" stroke="#FF204E" strokeDasharray="5 5" />
           <Line type="monotone" dataKey="click" stroke="#82ca9d" strokeDasharray="3 4 5 2" />
         </LineChart>
       </ResponsiveContainer>
