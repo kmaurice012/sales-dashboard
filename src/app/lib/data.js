@@ -11,21 +11,16 @@ salesRecords.forEach((record) => {
 });
 const yearsArray = Array.from(uniqueYearIds);
 
-const uniqueStatus = new Set();
-salesRecords.forEach((record) => {
-  uniqueStatus.add(record.STATUS);
-});
-const statusArray = Array.from(uniqueStatus);
-// console.log(statusArray);
-
-
+// Get the first and last years
 
 const firstYear = yearsArray[0];
 const latestYear = yearsArray[yearsArray.length - 1];
 const previousYear = yearsArray[yearsArray.length - 2];
 
 const shippedSales = csvData.filter((item) => item.STATUS === "Shipped");
+
 //Start Of First Year Average Sales
+
 const FirstYearSales = shippedSales.filter(
   (item) => item.YEAR_ID === firstYear
 );
@@ -36,8 +31,11 @@ for (const order of FirstYearSales) {
   FirstShippedSales += parseFloat(Number(order.SALES));
 }
 const averageFirstYearSales = (FirstShippedSales / FirstNoOfSales).toFixed(2);
+
 //End Of First Year Average Sales
+
 //Start Of Latest Year Average Sales
+
 const latestYearSales = shippedSales.filter(
   (item) => item.YEAR_ID === latestYear
 );
@@ -50,8 +48,10 @@ for (const order of latestYearSales) {
 const averageLatestYearSales = (LatestShippedSales / LatestNoOfSales).toFixed(
   2
 );
+
 //End Of Latest Year Average Sales
-// Start Of Lates Year Average Orders
+
+// Start Of Latest Year Average Orders
    let LatestOderedProducts = 0;
    for (const order of latestYearSales) {
      LatestOderedProducts += Number(order.QUANTITYORDERED);
@@ -60,6 +60,15 @@ const averageLatestYearSales = (LatestShippedSales / LatestNoOfSales).toFixed(
 
 // End Of Lates Year Average Orders
 
+// Start Of Latest Year Average No Orders
+
+const uniqueCustomerIds = new Set();
+latestYearSales.forEach((record) => {
+  uniqueCustomerIds.add(record.CUSTOMERNAME);
+});
+const customersArray = Array.from(uniqueCustomerIds);
+const latestNoOfCustomersThatYear = customersArray.length
+// End Of Latest Year Average No Orders
 
 //Start Of Previous Year Average Sales
 const previousYearSales = shippedSales.filter(
@@ -76,6 +85,7 @@ const averagePreviousYearSales = (
 ).toFixed(2);
 
 //End Of Previous Year Average Sales
+
 //Start Of Previous Year Average Oders
 let PreviousOderedProducts = 0;
 for (const order of previousYearSales) {
@@ -84,6 +94,16 @@ for (const order of previousYearSales) {
 const averagePreviousYearOders = (PreviousOderedProducts / PreviousNoOfSales).toFixed(2)
 //End Of Previous Year Average Oders
 
+// Start Of Latest Year Average No Orders
+
+const uniquePreviousCustomerIds = new Set();
+previousYearSales.forEach((record) => {
+  uniquePreviousCustomerIds.add(record.CUSTOMERNAME);
+});
+const previousCustomersArray = Array.from(uniquePreviousCustomerIds);
+const previousNoOfCustomersThatYear = previousCustomersArray.length
+
+// End Of Latest Year Average No Orders
 
 //Calculate Total Sales Increase Or Decrease
 let percentageIncrease = 0;
@@ -104,6 +124,7 @@ if (averageLatestYearSales > averagePreviousYearSales) {
 }
 
 //Calculate Total Sales Increase Or Decrease
+
 //Calculate Total Oder Increase Or Decrease
 let percentageOrderIncrease = 0;
 let percentageOrderDeacrease = 0;
@@ -122,20 +143,26 @@ if (averageLatestYearOders > averagePreviousYearOders) {
   orderchange = -percentageOrderDeacrease;
 }
 //Calculate Total Oder Increase Or Decrease
+//Calculate Anual No Of Customers Increase Or Decrease
+let percentageCustomerIncrease = 0;
+let percentageCustomerDeacrease = 0;
+let customerchange;
+if (latestNoOfCustomersThatYear > previousNoOfCustomersThatYear) {
+  let difference = latestNoOfCustomersThatYear - previousNoOfCustomersThatYear;
+  percentageCustomerDeacrease = ((difference / previousNoOfCustomersThatYear) * 100).toFixed(
+    3
+  );
+  customerchange = percentageCustomerDeacrease;
+} else if (latestNoOfCustomersThatYear < previousNoOfCustomersThatYear) {
+  let difference = previousNoOfCustomersThatYear - latestNoOfCustomersThatYear;
+  percentageCustomerIncrease = ((difference / latestNoOfCustomersThatYear) * 100).toFixed(
+    3
+  );
+  customerchange = -percentageCustomerIncrease;
+}
+//Calculate Anual No Of Customers Increase Or Decrease
 
-
-//   export const years = Array.from(uniqueYearIds);
-
-// const shippedSales = csvData.filter((item) => item.STATUS === "Shipped");
-
-// let TotalShippedSales = 0;
-// shippedSales.forEach((item) => {
-//   if(item.YEAR_ID === latestYear){
-//     TotalShippedSales += item.SALES;
-//   }
-// });
-
-//Returns sales recorded on a specificc year
+//Returns sales recorded on a specific year
 
 export const getYearlySalesData = async (year) => {
   try {
@@ -189,8 +216,8 @@ export const cards = [
   },
   {
     id: 3,
-    title: "Revenue",
-    number: 6.642,
-    change: 2,
+    title: "Total No Of Customers",
+    number: latestNoOfCustomersThatYear,
+    change: customerchange,
   },
 ];
