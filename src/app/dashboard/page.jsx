@@ -9,9 +9,10 @@ import Transactions from "../ui/dashboard/transactions/transactions";
 // import { graphData } from "@/app/lib/data";
 import { useState, useEffect } from "react";
 
-const Dashboard =  () => {
+const Dashboard = () => {
   const yearsArr = ["2003", "2004", "2005"];
   const [year, setYear] = useState("2003");
+  const [loading, setLoading] = useState(true);
   const [allData, setAllData] = useState({
     data: [],
     rows: [],
@@ -24,31 +25,38 @@ const Dashboard =  () => {
   };
   // const data = graphData;
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/sales?year=${year}`)
-    .then(response => response.json())
-    .then(data => {
-      setAllData(data)
-      console.log(data)
-    })
-    .catch((e) => console.error(e))
+      .then((response) => response.json())
+      .then((data) => {
+        setAllData(data);
+        console.log(data);
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setLoading(false));
   }, [year]);
   return (
-
     <div className={styles.wrapper}>
       <div className={styles.main}>
-        <div className={styles.cards}>
-          {allData.cards.map((item) => (
-            <Card item={item} key={item.id} />
-          ))}
-        </div>
-        <Barchart data={allData.data} />
-        {/* <Chart /> */}
-        <Transactions
-          rows={allData.rows}
-          year={year}
-          handleChange={handleChange}
-          yearsArr={yearsArr}
-        />
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            <div className={styles.cards}>
+              {allData.cards.map((item) => (
+                <Card item={item} key={item.id} />
+              ))}
+            </div>
+            <Barchart data={allData.data} />
+            {/* <Chart /> */}
+            <Transactions
+              rows={allData.rows}
+              year={year}
+              handleChange={handleChange}
+              yearsArr={yearsArr}
+            />
+          </>
+        )}
       </div>
       {/* <div className={styles.side}>
         <Rightbar />
