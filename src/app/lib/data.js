@@ -1,6 +1,9 @@
 import { convertCsvToJson } from "./utils.js";
+import path from "path";
 
-const csvData = await convertCsvToJson("/sales_data_sample.csv");
+const filePath = path.join(process.cwd(), "public", "sales_data_sample.csv");
+
+const csvData = await convertCsvToJson(filePath);
 
 //Returns A range of years
 
