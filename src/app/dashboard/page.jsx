@@ -1,29 +1,54 @@
-import { cards } from "../lib/data";
+"use client";
+// import { cards } from "../lib/data";
 import Card from "../ui/dashboard/card/card";
 // import Chart from "../ui/dashboard/chart/chart";
-import  Barchart  from "../ui/dashboard/barchart/barchart";
+import Barchart from "../ui/dashboard/barchart/barchart";
 import styles from "../ui/dashboard/dashboard.module.css";
 // import Rightbar from "../ui/dashboard/rightbar/rightbar";
 import Transactions from "../ui/dashboard/transactions/transactions";
-import { graphData, getYearlySalesData } from "@/app/lib/data";
+// import { graphData } from "@/app/lib/data";
+import { useState, useEffect } from "react";
 
+const Dashboard =  () => {
+  const yearsArr = ["2003", "2004", "2005"];
+  const [year, setYear] = useState("2003");
+  const [allData, setAllData] = useState({
+    data: [],
+    rows: [],
+    cards: [],
+  });
 
-const Dashboard = async () => {
-  const data = graphData
- const rows = await getYearlySalesData();
-
+  console.log(year);
+  const handleChange = (event) => {
+    setYear(event.target.value);
+  };
+  // const data = graphData;
+  useEffect(() => {
+    fetch(`/api/sales?year=${year}`)
+    .then(response => response.json())
+    .then(data => {
+      setAllData(data)
+      console.log(data)
+    })
+    .catch((e) => console.error(e))
+  }, [year]);
   return (
+
     <div className={styles.wrapper}>
       <div className={styles.main}>
         <div className={styles.cards}>
-          {cards.map((item) => (
+          {allData.cards.map((item) => (
             <Card item={item} key={item.id} />
           ))}
         </div>
-        <Barchart data={data}/>
+        <Barchart data={allData.data} />
         {/* <Chart /> */}
-        <Transactions rows={rows}/>
-    
+        <Transactions
+          rows={allData.rows}
+          year={year}
+          handleChange={handleChange}
+          yearsArr={yearsArr}
+        />
       </div>
       {/* <div className={styles.side}>
         <Rightbar />

@@ -1,7 +1,9 @@
+import Dashboard from "./dashboard/page"
+
 // TODO
 const Homepage = () => {
   return (
-    <div>Homepage</div>
+    <Dashboard/>
   )
 }
 

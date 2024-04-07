@@ -36,12 +36,12 @@ const columns = [
   },
 ];
 
-const Transactions = ({ rows }) => {
+const Transactions = ({ rows,year,handleChange, yearsArr }) => {
   return (
     <div className={styles.container}>
        <div className={styles.tableHead}>
         <h2 className={styles.title}>Transactions</h2>
-        <SelectComponent/>
+        <SelectComponent year={year} handleChange={handleChange} yearsArr={yearsArr}/>
       </div>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
