@@ -1,6 +1,6 @@
 import { convertCsvToJson } from "./utils.js";
 
-const csvData = await convertCsvToJson("public/sales_data_sample.csv");
+const csvData = await convertCsvToJson("/sales_data_sample.csv");
 
 //Returns A range of years
 
