@@ -39,7 +39,9 @@ const Dashboard = () => {
     <div className={styles.wrapper}>
       <div className={styles.main}>
         {loading ? (
-          <div className={styles.cards}>Loading...</div>
+          <div className={styles.cards} style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <progress className="pure-material-progress-linear"/>
+          </div>
         ) : (
           <>
             <div className={styles.cards}>
