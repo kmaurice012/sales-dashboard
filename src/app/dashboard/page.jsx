@@ -39,7 +39,7 @@ const Dashboard = () => {
     <div className={styles.wrapper}>
       <div className={styles.main}>
         {loading ? (
-          <div>Loading...</div>
+          <div className={styles.cards} >Loading...</div>
         ) : (
           <>
             <div className={styles.cards}>
