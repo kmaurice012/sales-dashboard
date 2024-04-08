@@ -14,6 +14,7 @@ salesRecords.forEach((record) => {
 });
 const yearsArray = Array.from(uniqueYearIds);
 
+
 // Get the first and last years
 
 const firstYear = yearsArray[0];
@@ -169,7 +170,7 @@ if (latestNoOfCustomersThatYear > previousNoOfCustomersThatYear) {
 
 export const getYearlySalesData = async (year) => {
   try {
-    const response = csvData
+    const response = csvData.filter((item) => item.YEAR_ID === year);
     yearsArray;
     return response;
   } catch {
