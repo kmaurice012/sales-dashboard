@@ -25,7 +25,7 @@ const Barchart = ({data}) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="sales" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+          <Bar dataKey="sales" fill="#0B60B0" activeBar={<Rectangle fill="#40A2D8" stroke="#  F0EDCF" />} />
         </BarChart>
       </ResponsiveContainer>
     </div>
