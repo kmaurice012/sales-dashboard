@@ -4,39 +4,19 @@ import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import SelectComponent from "../select/select";
 import Chip from '@mui/material/Chip';
+import moment from "moment"
 
-const getStatusBackgroundColor = (status) => {
-  switch (status) {
-    case "Shipped":
-      return "#7FFF7F"; // Light green
-    case "Disputed":
-      return "#FF4500"; // Orange Red
-    case "In Process":
-      return "#FFD700"; // Gold
-    case "Cancelled":
-      return "#FF6347"; // Tomato
-    case "On Hold":
-      return "#87CEEB"; // Sky Blue
-    case "Resolved":
-      return "#00CED1"; // Dark Turquoise
-    default:
-      return "#FFFFFF"; // Default color
-  }
-};
 const columns = [
 
   {
     field: "CUSTOMERNAME",
     headerName: "Name",
-    width: 150,
-    headerClassName: "super-app-theme--header",
+    width: 250,
   },
   {
     field: "STATUS",
     headerName: "Status",
-    description: "This column has a value getter and is not sortable.",
-    width: 160,
-    headerClassName: "super-app-theme--header",
+    width: 250,
     renderCell: (params) => (
       <div>
        {params.value === "Shipped" ? (
@@ -60,14 +40,17 @@ const columns = [
   {
     field: "ORDERDATE",
     headerName: "Date",
-    width: 150,
-    headerClassName: "super-app-theme--header",
+    width: 250,
+    renderCell: (params) => (
+      <div>
+        {` ${moment(params.value).format("MMM Do YYYY")}`}
+      </div>
+ ),
   },
   {
     field: "SALES",
     headerName: "Amount",
-    description: "This column has a value getter and is not sortable.",
-    width: 160,
+    width: 200,
     renderCell: (params) => (
          <div>
            {`$ ${params.value}`}
@@ -136,10 +119,10 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
           }}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 6 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[6, 10]}
+          pageSizeOptions={[10, 20, 50, 100, 200, 500]}
         />
       </Box>
     </div>
