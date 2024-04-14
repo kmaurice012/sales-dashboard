@@ -61,9 +61,6 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
         sx={{
           height: 400,
           width: "100%",
-          // "& .super-app-theme--header .MuiDataGrid-colCellTitle": {
-          //   backgroundColor: "blue",
-          // },
           "& .MuiDataGrid-colHeader .mui-7y4bub-MuiDataGrid-root .MuiDataGrid-withBorderColor":
             {
               backgroundColor: "rgba(255, 7, 0, 0.55) !important",
@@ -74,7 +71,7 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
           rows={rows}
           columns={columns}
           getRowId={(row) => row.ORDERNUMBER}
-          className={styles.dataGrid}
+          getRowClassName={(params) => `super-app-theme--${params.row.Status}`}
           sx={{
             boxShadow: 2,
             border: 2,
@@ -96,15 +93,23 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
             ".mui-rtrcn9-MuiTablePagination-root": {
               color: "var(--textSoft)",
             },
+            "&.MuiDataGrid-root": {
+              border: "none",
+            },
+            ".MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+       
+             " .MuiDataGrid-container--top [role=row]": {
+              background: " var(--bg) !important",
+              }
           }}
           initialState={{
             pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
+              paginationModel: { page: 0, pageSize: 6 },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[6, 10]}
         />
       </Box>
     </div>
