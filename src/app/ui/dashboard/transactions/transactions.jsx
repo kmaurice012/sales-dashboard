@@ -3,38 +3,32 @@ import styles from "./transactions.module.css";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import SelectComponent from "../select/select";
+import Chip from '@mui/material/Chip';
 
+const getStatusBackgroundColor = (status) => {
+  switch (status) {
+    case "Shipped":
+      return "#7FFF7F"; // Light green
+    case "Disputed":
+      return "#FF4500"; // Orange Red
+    case "In Process":
+      return "#FFD700"; // Gold
+    case "Cancelled":
+      return "#FF6347"; // Tomato
+    case "On Hold":
+      return "#87CEEB"; // Sky Blue
+    case "Resolved":
+      return "#00CED1"; // Dark Turquoise
+    default:
+      return "#FFFFFF"; // Default color
+  }
+};
 const columns = [
-  {
-    field: "ORDERNUMBER",
-    headerName: "Order Number",
-    width: 90,
-    headerClassName: "super-app-theme--header",
-  },
+
   {
     field: "CUSTOMERNAME",
-    headerName: " Customer Name",
+    headerName: "Name",
     width: 150,
-    headerClassName: "super-app-theme--header",
-  },
-  {
-    field: "ORDERDATE",
-    headerName: "Order Date",
-    width: 150,
-    headerClassName: "super-app-theme--header",
-  },
-  {
-    field: "PRODUCTLINE",
-    headerName: "Product Line",
-    type: "number",
-    width: 110,
-    headerClassName: "super-app-theme--header",
-  },
-  {
-    field: "SALES",
-    headerName: "Sales",
-    description: "This column has a value getter and is not sortable.",
-    width: 160,
     headerClassName: "super-app-theme--header",
   },
   {
@@ -43,7 +37,44 @@ const columns = [
     description: "This column has a value getter and is not sortable.",
     width: 160,
     headerClassName: "super-app-theme--header",
+    renderCell: (params) => (
+      <div>
+       {params.value === "Shipped" ? (
+          <Chip label={params.value} color="success" />
+        ) : params.value === "Disputed" ? (
+          <Chip label={params.value} color="warning" />
+        ) : params.value === "In Process" ? (
+          <Chip label={params.value} color="info" />
+        ) : params.value === "Cancelled" ? (
+          <Chip label={params.value} color="error" />
+        ) : params.value === "On Hold" ? (
+          <Chip label={params.value} color="secondary" />
+        ) : params.value === "Resolved" ? (
+          <Chip label={params.value} color="primary" />
+        ) : (
+          <span>{params.value}</span>
+        )}
+      </div>  
+    ),
   },
+  {
+    field: "ORDERDATE",
+    headerName: "Date",
+    width: 150,
+    headerClassName: "super-app-theme--header",
+  },
+  {
+    field: "SALES",
+    headerName: "Amount",
+    description: "This column has a value getter and is not sortable.",
+    width: 160,
+    renderCell: (params) => (
+         <div>
+           {`$ ${params.value}`}
+         </div>
+    ),
+  },
+ 
 ];
 
 const Transactions = ({ rows, year, handleChange, yearsArr }) => {
@@ -71,7 +102,6 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
           rows={rows}
           columns={columns}
           getRowId={(row) => row.ORDERNUMBER}
-          getRowClassName={(params) => `super-app-theme--${params.row.Status}`}
           sx={{
             boxShadow: 2,
             border: 2,
@@ -99,10 +129,10 @@ const Transactions = ({ rows, year, handleChange, yearsArr }) => {
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
-       
-             " .MuiDataGrid-container--top [role=row]": {
+
+            " .MuiDataGrid-container--top [role=row]": {
               background: " var(--bg) !important",
-              }
+            },
           }}
           initialState={{
             pagination: {
