@@ -1,4 +1,5 @@
 "use client";
+
 import styles from "./transactions.module.css";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";

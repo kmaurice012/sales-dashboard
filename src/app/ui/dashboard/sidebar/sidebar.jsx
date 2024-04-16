@@ -1,36 +1,22 @@
 import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
-import {
-  MdDashboard,
-  MdSupervisedUserCircle,
-  MdShoppingBag,
-  MdAttachMoney,
-  MdWork,
-  MdAnalytics,
-  MdPeople,
-  MdOutlineSettings,
-  MdHelpCenter,
-  MdLogout,
-  MdOutlineShoppingCartCheckout
-} from "react-icons/md";
-// import { auth, signOut } from "@/app/auth";
+import { LuLayoutDashboard } from "react-icons/lu";
+
 
 const menuItems = [
   {
-    title: "Pages",
     list: [
       {
         title: "Dashboard",
-        path: "/dashboard",
-        icon: <MdDashboard />,
+        path: "/",
+        icon: <LuLayoutDashboard />,
       },
     ],
   },
 ];
 
 const Sidebar = async () => {
-  // const { user } = await auth();
   return (
     <div className={styles.container}>
       <div className={styles.user}>

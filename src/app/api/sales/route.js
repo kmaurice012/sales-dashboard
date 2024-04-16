@@ -1,8 +1,14 @@
-import {  getYearlySalesData, graphData, cards } from "@/app/lib/data";
+import {  getYearlySalesData, graphData,MonthlySales,cards, years } from "@/app/lib/data";
 
+/**
+ * Retrieves data from the server based on the provided year.
+ *
+ * @param {object} request - The request object containing the URL.
+ * @return {Promise} A promise that resolves to the server response.
+ */
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
-    const year = searchParams.get('year'); // Assuming a query param like ?year=2023
+    const year = searchParams.get('year'); 
   
     if (!year) {
       return new Response(JSON.stringify({ error: 'Year parameter is required' }), {
@@ -18,15 +24,9 @@ export async function GET(request) {
       cards: cards ?? [],
       data: graphData ?? [],
       rows: yearlySales ?? [],
+      MonthlySales: MonthlySales ?? [],
+      years: years ?? [],
     }
-    // if (data.error) {
-    //   return new Response(JSON.stringify(res), {
-    //     status: data.status,
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
-    // }
   
     return new Response(JSON.stringify(res), {
       headers: {

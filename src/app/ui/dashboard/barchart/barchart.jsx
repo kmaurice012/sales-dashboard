@@ -7,7 +7,7 @@ const Barchart = ({data}) => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Sales Report</h2>
+      <h2 className={styles.title}>Yearly Sales Report</h2>
       <ResponsiveContainer width="100%" height="90%"> 
       <BarChart
           width={500}

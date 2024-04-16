@@ -1,10 +1,19 @@
-import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { LuBarChart4 } from "react-icons/lu";
+import { LuShoppingCart } from "react-icons/lu";
+import { LuUsers } from "react-icons/lu";
 import styles from "./card.module.css";
 
 const Card = ({ item }) => {
   return (
     <div className={styles.container}>
-      <MdOutlineShoppingCartCheckout size={24} />
+      {item.id === 1 ? (
+        <LuBarChart4 />
+        ): item.id === 2 ? (
+          <LuShoppingCart />
+        ): (
+          <LuUsers />
+        )
+        }
       <div className={styles.texts}>
         <span className={styles.title}>{item.title}</span>
         <span className={styles.number}>{item.number}</span>

@@ -28,6 +28,8 @@ const yearsArray = Array.from(uniqueYearIds);
 let yearlyAvaragesSales = [];
 let yearlyAvaragesOrders = [];
 let yearlyAvaragesNoCustomers = [];
+let MonthlyAverageSales = [];
+let months = [ { id: "1" , name : "Jan"}, { id: "2" , name : "Feb"}, { id: "3" , name : "Mar"}, { id: "4" , name : "Apr"}, { id: "5" , name : "May"}, { id: "6", name : "Jun"}, { id: "7" , name : "Jul"}, { id: "8" , name : "Aug"}, { id: "9" , name : "Sep"}, { id: "10" , name : "Oct"}, { id: "11" , name : "Nov"}, { id: "12" , name : "Dec"}];
 
 const getAverageYearlySalesData = () => {
   for (let index = 0; index < yearsArray.length; index++) {
@@ -58,8 +60,37 @@ const getAverageYearlySalesData = () => {
       avarageObj.sales = Number(averageYearlySales);
       yearlyAvaragesSales.push(avarageObj);
     };
-    getYearlyAvarageSales();
+    getYearlyAvarageSales(); 
 
+
+/**
+ * Calculates the average monthly sales for each month of a given year.
+ *
+ * @return {Array} An array of objects containing the average monthly sales for each month.
+ */
+    const getMonthlyAvarageSales = () => {
+    let avarageYearlyMonthlySales = [];
+      for (let i = 0; i < months.length; i++) {
+        const element = months[i];
+        const monthlySales = shippedSales.filter(
+          (item) => item.YEAR_ID === yearsArray[index] && item.MONTH_ID === element.id
+        )
+        let sales = 0;
+        monthlySales.forEach((item) => {
+          sales += parseFloat(Number(item.SALES));  
+        })
+        const allMonthlySales = (sales).toFixed(2);
+
+        let avarageObj = {
+          id : months[i].id,
+          name: months[i].name,
+        }
+        avarageObj[`sales${yearsArray[index]}`] = Number(allMonthlySales);
+        avarageYearlyMonthlySales.push(avarageObj);
+      }
+      MonthlyAverageSales.push(avarageYearlyMonthlySales);
+    }
+    getMonthlyAvarageSales();
 
     /**
      * Calculate the average yearly orders based on the input data.
@@ -113,6 +144,30 @@ const getAverageYearlySalesData = () => {
   }
 };
 getAverageYearlySalesData();
+
+/**
+ * Merges the monthly average sales data into a single array,
+ * where each month has its own object containing the average sales
+ * for that month. If a month appears in more than one year,
+ * the monthly sales are combined.
+ *
+ * @return {Array} An array of objects, where each object
+ * contains the monthly average sales data for a given month.
+ */
+export const MonthlySales = MonthlyAverageSales.reduce((acc, curr) => {
+  curr.forEach(item => {
+    const { id, name, ...rest } = item;
+    const existingItem = acc.find(accItem => accItem.id === id);
+    if (existingItem) {
+      Object.assign(existingItem, rest);
+    } else {
+      acc.push({ id, name, ...rest });
+    }
+  });
+  return acc;
+}, []);
+
+
 
 
 /**
@@ -241,6 +296,8 @@ export const getYearlySalesData = async (year) => {
 };
 
 export const graphData = yearlyAvaragesSales
+export const years = yearsArray
+
   export const cards = [
     {
       id: 1,
